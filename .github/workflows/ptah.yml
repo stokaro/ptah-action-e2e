@@ -1,0 +1,26 @@
+name: Ptah
+
+on:
+  pull_request:
+
+permissions:
+  checks: write
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  ptah:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: stokaro/ptah-action@v1
+        with:
+          dir: ./models
+          db-url: sqlite:///${{ runner.temp }}/ptah-action-e2e.db
+          dialect: sqlite
+          migration-dir: ./migrations
+          lint: "false"
+          comment: "true"
